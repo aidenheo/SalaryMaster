@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 급여계산기
 
-## Getting Started
+대한민국 직장인·아르바이트생을 위한 급여·노동법 계산 서비스입니다. 월급/연봉 실수령액, 주휴수당,
+퇴직금, 연차수당, 시급, 최저임금, 연장·야간·휴일수당을 2026년 기준으로 계산합니다.
 
-First, run the development server:
+## 기술 스택
+
+- Next.js 16 (App Router) + TypeScript (strict)
+- React 19, Tailwind CSS v4
+- Vitest (계산 로직 단위 테스트)
+- ESLint (eslint-config-next)
+
+모든 계산은 브라우저(클라이언트)에서 처리됩니다. 서버나 DB에 급여 정보를 저장하지 않습니다.
+
+## 실행 방법
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev       # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 빌드 방법
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+npm run start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 테스트/검증
 
-## Learn More
+```bash
+npm run test       # vitest (계산 로직 단위 테스트, 경계값 포함)
+npm run typecheck  # tsc --noEmit
+npm run lint       # eslint
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 프로젝트 구조
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                          라우팅 (홈, 8개 계산기, 소개/약관/문의 등)
+  calculators/<slug>/page.tsx 계산기별 페이지 (metadata, 콘텐츠, FAQ)
+components/
+  calculators/                계산기별 클라이언트 입력 폼 (상태 관리 + 결과 렌더)
+  ui/                         NumberField, DateField, ResultDisplay 등 공통 입력/출력 컴포넌트
+  ads/AdSlot.tsx               AdSense 승인 전 광고 자리표시자
+lib/
+  calculators/                순수 계산 함수 (UI와 독립적으로 테스트 가능)
+  rules/2026/                 연도별 법정 기준 데이터 (최저임금, 4대보험 요율, 소득세, 근로기준법)
+  calculatorList.ts           계산기 메타데이터(제목/설명/그룹), 홈·관련 계산기 렌더링에 사용
+tests/                        계산기별 vitest 단위 테스트 (정상값 + 경계값)
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 계산 기준 데이터는 어디서 수정하나요?
 
-## Deploy on Vercel
+**법령/요율 숫자는 전부 `lib/rules/2026/` 아래 4개 파일에 모여 있습니다.** 계산 코드
+(`lib/calculators/`)는 이 값을 참조만 할 뿐 하드코딩하지 않습니다.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| 파일 | 내용 | 출처 |
+|---|---|---|
+| `minimumWage.ts` | 연도별 최저시급/최저월급 | 고용노동부 최저임금 고시 |
+| `insurance.ts` | 국민연금·건강보험·장기요양보험·고용보험 요율, 기준소득월액 상하한 | 국민연금공단, 국민건강보험공단, 보건복지부, 고용노동부 |
+| `incomeTax.ts` | 근로소득공제·인적공제·종합소득세율·근로소득세액공제·자녀세액공제 | 소득세법 §47·§50·§55·§59 |
+| `labor.ts` | 주휴수당 요건, 연장·야간·휴일 가산율, 연차 발생 기준 | 근로기준법 §55·§56·§60, 근로자퇴직급여보장법 §8 |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 다음 해(2027년 등) 기준으로 업데이트하려면
+
+1. 위 각 파일의 `...ByYear` 객체(또는 `...Rules2026` 상수)에 새 연도 키를 추가합니다. 예:
+   `minimumWageByYear[2027] = { hourly: ..., ... }`
+2. `LATEST_MINIMUM_WAGE_YEAR`, `LATEST_INSURANCE_YEAR` 등 "최신 연도" 상수를 갱신합니다.
+3. `lib/calculators/payrollDeductions.ts`의 `year` 기본값과 각 계산기 컴포넌트가 이 최신 연도를
+   기본으로 사용하는지 확인합니다.
+4. 반드시 고용노동부·국민연금공단·국민건강보험공단·국세청 공식 고시로 수치를 재확인한 뒤
+   반영합니다. 출처가 불명확하거나 자료 간 차이가 있으면 보수적인 값을 적용하고 페이지 내
+   출처 표기를 업데이트합니다.
+5. `tests/`의 관련 테스트 값(예: 최저임금 하드코딩 값)도 함께 갱신합니다.
+
+### 소득세 계산 방식에 대한 중요한 안내
+
+국세청이 실제 원천징수에 사용하는 "근로소득 간이세액표"는 급여·가족수 조합별로 미리 계산된
+표입니다. 이 프로젝트는 그 표를 통째로 복제하는 대신, 표의 산정 근거인 소득세법 조항(근로소득
+공제, 인적공제, 사회보험료 공제, 종합소득세율, 근로소득세액공제, 자녀세액공제)을 그대로 적용해
+"연간 예상세액 ÷ 12" 방식으로 월 소득세를 추정합니다. 따라서 결과가 실제 급여명세서의
+원천징수세액과 다소 차이 날 수 있으며, 이 사실을 모든 결과 화면에 안내 문구로 표시합니다.
+
+## 새 계산기를 추가하려면
+
+1. `lib/calculators/<name>.ts`에 입력/출력 타입과 순수 계산 함수를 작성하고, 필요한 법정 기준은
+   `lib/rules/2026/`에서 가져옵니다.
+2. `tests/<name>.test.ts`에 정상값과 경계값 테스트를 작성합니다.
+3. `components/calculators/<Name>Calculator.tsx`에 입력 폼과 결과 UI를 작성합니다(기존 계산기
+   컴포넌트 구조를 참고).
+4. `lib/calculatorList.ts`에 슬러그/제목/설명/그룹을 추가합니다 (홈페이지, 관련 계산기, sitemap에
+   자동 반영됩니다).
+5. `app/calculators/<slug>/page.tsx`에 metadata, 계산기 컴포넌트, 설명 콘텐츠, FAQ(5개 이상)를
+   작성합니다.
+
+## 배포
+
+Vercel 등 Next.js를 지원하는 어떤 플랫폼에도 배포할 수 있습니다. 서버 상태나 DB가 없으므로 별도
+백엔드 인프라가 필요 없습니다. 배포 전 `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`,
+각 페이지의 `canonical`에 하드코딩된 `siteUrl`(`https://salary-master.example.com`)을 실제
+도메인으로 교체하세요.
+
+## 환경변수
+
+| 이름 | 필수 여부 | 설명 |
+|---|---|---|
+| `NEXT_PUBLIC_CONTACT_EMAIL` | 선택 | 설정하면 `/contact` 페이지에 문의 이메일이 표시됩니다. 설정하지 않으면 준비 중 안내가 표시됩니다. |
+
+## 알려진 제한 사항 (향후 개선 과제)
+
+- 소득세는 위에서 설명한 "연간 추정 방식"을 사용하며, 국세청 간이세액표의 정확한 원천징수액과는
+  차이가 있을 수 있습니다.
+- 퇴직금 계산기는 평균임금과 통상임금을 비교해 더 큰 금액을 적용하는 절차를 반영하지 않습니다.
+- 국민연금 기준소득월액 상하한은 2026년 하반기(7월~) 고시값을 연간 대표값으로 사용합니다
+  (2026년 상반기는 별도 고시값이 적용됩니다).
