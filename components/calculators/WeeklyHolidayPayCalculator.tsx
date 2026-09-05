@@ -7,9 +7,9 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateWeeklyHolidayPay } from "@/lib/calculators/weeklyHolidayPay";
 
 export default function WeeklyHolidayPayCalculator() {
-  const [hourlyWage, setHourlyWage] = useState(10_320);
-  const [daysPerWeek, setDaysPerWeek] = useState(5);
-  const [hoursPerDay, setHoursPerDay] = useState(6);
+  const [hourlyWage, setHourlyWage] = useState(0);
+  const [daysPerWeek, setDaysPerWeek] = useState(0);
+  const [hoursPerDay, setHoursPerDay] = useState(0);
 
   const result = useMemo(
     () => calculateWeeklyHolidayPay({ hourlyWage, daysPerWeek, hoursPerDay }),

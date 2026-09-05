@@ -7,8 +7,8 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateAnnualSalary } from "@/lib/calculators/annualSalary";
 
 export default function AnnualSalaryCalculator() {
-  const [annualSalary, setAnnualSalary] = useState(42_000_000);
-  const [nonTaxableAmount, setNonTaxableAmount] = useState(200_000);
+  const [annualSalary, setAnnualSalary] = useState(0);
+  const [nonTaxableAmount, setNonTaxableAmount] = useState(0);
   const [dependents, setDependents] = useState(1);
   const [childrenUnder20, setChildrenUnder20] = useState(0);
 

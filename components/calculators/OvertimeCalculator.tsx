@@ -7,8 +7,8 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateOvertime } from "@/lib/calculators/overtime";
 
 export default function OvertimeCalculator() {
-  const [hourlyWage, setHourlyWage] = useState(15_000);
-  const [extensionHours, setExtensionHours] = useState(10);
+  const [hourlyWage, setHourlyWage] = useState(0);
+  const [extensionHours, setExtensionHours] = useState(0);
   const [nightHours, setNightHours] = useState(0);
   const [holidayHours, setHolidayHours] = useState(0);
 

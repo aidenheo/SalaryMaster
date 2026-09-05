@@ -7,7 +7,7 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { checkMinimumWage } from "@/lib/calculators/minimumWage";
 
 export default function MinimumWageCalculator() {
-  const [hourlyWage, setHourlyWage] = useState(10_320);
+  const [hourlyWage, setHourlyWage] = useState(0);
 
   const result = useMemo(() => checkMinimumWage({ hourlyWage }), [hourlyWage]);
 

@@ -8,13 +8,15 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateSeverance } from "@/lib/calculators/severance";
 
 export default function SeveranceCalculator() {
-  const [hireDate, setHireDate] = useState("2023-01-01");
-  const [resignDate, setResignDate] = useState("2026-01-01");
-  const [last3MonthsTotalWage, setLast3MonthsTotalWage] = useState(9_000_000);
+  const [hireDate, setHireDate] = useState("");
+  const [resignDate, setResignDate] = useState("");
+  const [last3MonthsTotalWage, setLast3MonthsTotalWage] = useState(0);
   const [annualBonusTotal, setAnnualBonusTotal] = useState(0);
   const [annualLeaveAllowance, setAnnualLeaveAllowance] = useState(0);
 
-  const dateError = resignDate < hireDate ? "퇴사일은 입사일보다 빠를 수 없습니다." : undefined;
+  const datesIncomplete = !hireDate || !resignDate;
+  const dateError =
+    !datesIncomplete && resignDate < hireDate ? "퇴사일은 입사일보다 빠를 수 없습니다." : undefined;
 
   const result = useMemo(
     () =>
@@ -57,15 +59,21 @@ export default function SeveranceCalculator() {
       </div>
 
       <div className="space-y-3">
-        <ResultHighlight label="예상 퇴직금" value={dateError ? 0 : result.expectedSeverancePay} />
-        {!dateError && !result.eligible && (
+        <ResultHighlight
+          label="예상 퇴직금"
+          value={dateError || datesIncomplete ? 0 : result.expectedSeverancePay}
+        />
+        {!dateError && !datesIncomplete && !result.eligible && (
           <p className="rounded-md bg-danger-bg px-4 py-3 text-sm text-danger">
             계속근로기간이 1년 미만이라 퇴직금 지급 대상이 아닙니다. (근로자퇴직급여보장법 §4)
           </p>
         )}
         <div className="rounded-md border border-border bg-surface px-4">
-          <ResultRow label="계속근로일수" value={result.continuousServiceDays} unit="일" />
-          <ResultRow label="1일 평균임금" value={Math.round(result.averageDailyWage)} />
+          <ResultRow label="계속근로일수" value={datesIncomplete ? 0 : result.continuousServiceDays} unit="일" />
+          <ResultRow
+            label="1일 평균임금"
+            value={datesIncomplete ? 0 : Math.round(result.averageDailyWage)}
+          />
         </div>
         <CalcStandardNote sources={["고용노동부", "근로자퇴직급여보장법"]} />
       </div>

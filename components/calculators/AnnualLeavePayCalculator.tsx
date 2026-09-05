@@ -8,13 +8,15 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateAnnualLeave } from "@/lib/calculators/annualLeave";
 
 export default function AnnualLeavePayCalculator() {
-  const [hireDate, setHireDate] = useState("2024-01-01");
-  const [asOfDate, setAsOfDate] = useState("2026-01-01");
-  const [usedLeaveDays, setUsedLeaveDays] = useState(3);
-  const [monthlyOrdinaryWage, setMonthlyOrdinaryWage] = useState(3_000_000);
-  const [monthlyWorkHours, setMonthlyWorkHours] = useState(209);
+  const [hireDate, setHireDate] = useState("");
+  const [asOfDate, setAsOfDate] = useState("");
+  const [usedLeaveDays, setUsedLeaveDays] = useState(0);
+  const [monthlyOrdinaryWage, setMonthlyOrdinaryWage] = useState(0);
+  const [monthlyWorkHours, setMonthlyWorkHours] = useState(0);
 
-  const dateError = asOfDate < hireDate ? "기준일은 입사일보다 빠를 수 없습니다." : undefined;
+  const datesIncomplete = !hireDate || !asOfDate;
+  const dateError =
+    !datesIncomplete && asOfDate < hireDate ? "기준일은 입사일보다 빠를 수 없습니다." : undefined;
 
   const result = useMemo(
     () =>
@@ -51,10 +53,13 @@ export default function AnnualLeavePayCalculator() {
       </div>
 
       <div className="space-y-3">
-        <ResultHighlight label="예상 연차수당" value={dateError ? 0 : result.expectedLeaveAllowance} />
+        <ResultHighlight
+          label="예상 연차수당"
+          value={dateError || datesIncomplete ? 0 : result.expectedLeaveAllowance}
+        />
         <div className="rounded-md border border-border bg-surface px-4">
-          <ResultRow label="발생 연차" value={result.accruedLeaveDays} unit="일" />
-          <ResultRow label="잔여 연차" value={result.remainingLeaveDays} unit="일" />
+          <ResultRow label="발생 연차" value={datesIncomplete ? 0 : result.accruedLeaveDays} unit="일" />
+          <ResultRow label="잔여 연차" value={datesIncomplete ? 0 : result.remainingLeaveDays} unit="일" />
           <ResultRow label="1일 통상임금" value={result.dailyOrdinaryWage} />
         </div>
         <CalcStandardNote sources={["고용노동부", "근로기준법 §60"]} />

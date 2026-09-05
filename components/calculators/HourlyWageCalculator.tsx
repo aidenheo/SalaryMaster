@@ -7,8 +7,8 @@ import CalcStandardNote from "@/components/CalcStandardNote";
 import { calculateHourlyWage } from "@/lib/calculators/hourlyWage";
 
 export default function HourlyWageCalculator() {
-  const [monthlySalary, setMonthlySalary] = useState(2_156_880);
-  const [weeklyWorkHours, setWeeklyWorkHours] = useState(40);
+  const [monthlySalary, setMonthlySalary] = useState(0);
+  const [weeklyWorkHours, setWeeklyWorkHours] = useState(0);
 
   const result = useMemo(
     () => calculateHourlyWage({ monthlySalary, weeklyWorkHours }),
