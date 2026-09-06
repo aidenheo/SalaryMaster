@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SourceList from "@/components/SourceList";
 import AnnualSalaryCalculator from "@/components/calculators/AnnualSalaryCalculator";
 
 const siteUrl = "https://salary-cal.com";
@@ -57,17 +58,56 @@ export default function AnnualSalaryPage() {
         <section>
           <h2 className="mb-2 text-xl font-bold text-heading">연봉과 월급 실수령액의 관계</h2>
           <p className="text-sm leading-relaxed text-muted">
-            연봉제라도 매달 받는 급여는 결국 연봉을 12로 나눈 금액을 기준으로 공제됩니다. 이 계산기는
-            월급 실수령액 계산기와 같은 계산 엔진을 사용해 월/연간 결과를 함께 보여줍니다.
+            연봉제라도 매달 받는 급여는 결국 연봉을 12로 나눈 금액을 기준으로 4대보험과 세금이
+            공제됩니다. 이 계산기는 월급 실수령액 계산기와 같은 계산 로직을 사용해 월 실수령액을
+            구한 뒤 12배 해 연간 실수령액을 보여줍니다.
           </p>
         </section>
+
         <section>
-          <h2 className="mb-2 text-xl font-bold text-heading">연봉 협상 시 참고할 점</h2>
+          <h2 className="mb-2 text-xl font-bold text-heading">입력값 설명</h2>
+          <ul className="list-inside list-disc space-y-1 text-sm leading-relaxed text-muted">
+            <li>
+              <strong className="text-foreground">연봉(세전)</strong> — 근로계약서에 적힌 세전
+              총 연봉. 고정 상여금이 연봉에 포함되어 있다면 함께 입력합니다.
+            </li>
+            <li>
+              <strong className="text-foreground">월 비과세 급여</strong> — 식대(월 20만원
+              한도) 등 매달 비과세로 처리되는 금액.
+            </li>
+            <li>
+              <strong className="text-foreground">부양가족 수·자녀 수</strong> — 인적공제와
+              자녀세액공제 계산에 쓰입니다. 본인을 포함해 실제로 공제받는 인원을 입력합니다.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 예시</h2>
           <p className="text-sm leading-relaxed text-muted">
-            같은 연봉이라도 비과세 항목 구성, 부양가족 수에 따라 실수령액이 달라집니다. 이직이나
-            연봉 협상 전에 조건을 바꿔가며 비교해보면 도움이 됩니다.
+            연봉 42,000,000원이면 월 세전 급여는 3,500,000원입니다. 비과세 식대 20만원, 부양가족
+            본인 1명 조건에서 월 실수령액은 약 300만원 내외, 연간 실수령액은 약 3,600만원
+            내외로 계산됩니다. 상여금이 특정 월에 몰려 지급되면 월별 수령액은 달라지지만 연간
+            합계는 비슷합니다.
           </p>
         </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">결과가 실제와 다를 수 있는 이유</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            상여금 지급 시기, 성과급 유무, 연중 요율·부양가족 변동, 연말정산 환급·추가납부에
+            따라 실제 수령액은 달라집니다. 이 계산기는 조건이 1년 내내 동일하다고 가정한
+            평균적인 예상값입니다.
+          </p>
+        </section>
+
+        <SourceList
+          items={[
+            { label: "국민연금공단", href: "https://www.nps.or.kr/" },
+            { label: "국민건강보험공단 — 4대 사회보험료 모의계산", href: "https://www.nhis.or.kr/" },
+            { label: "국세청 홈택스 — 근로소득 간이세액표", href: "https://www.hometax.go.kr/" },
+          ]}
+        />
       </article>
 
       <div className="mt-10 space-y-10">

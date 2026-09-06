@@ -60,7 +60,7 @@ export const calculators: CalculatorMeta[] = [
     slug: "minimum-wage",
     title: "최저임금 계산기",
     shortTitle: "최저임금 확인",
-    description: "2026년 최저임금 기준으로 내 시급이 적법한지 확인합니다.",
+    description: "시급·일급·주급·월급과 근무시간으로 2026년 최저임금 충족 여부를 확인합니다.",
     group: "최저임금",
   },
 ];

@@ -36,7 +36,10 @@ export default function HomePage() {
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
       <section className="mb-10">
         <h1 className="text-2xl font-bold text-heading sm:text-3xl">직장인 급여 계산기</h1>
-        <p className="mt-2 text-base text-muted">내 급여와 근로수당을 간편하게 계산해보세요.</p>
+        <p className="mt-2 text-base leading-relaxed text-muted">
+          월급·연봉 실수령액부터 주휴수당, 퇴직금, 연차수당, 최저임금까지 2026년 기준으로
+          계산합니다. 입력한 값은 브라우저에서만 처리되며 저장되지 않습니다.
+        </p>
         <div className="mt-5 flex flex-wrap gap-3">
           <Link
             href="/calculators/salary"
@@ -104,16 +107,35 @@ export default function HomePage() {
         </ul>
       </section>
 
-      <section className="mb-10 rounded-md border border-border bg-surface p-5" aria-labelledby="basis-heading">
-        <h2 id="basis-heading" className="mb-2 text-lg font-bold text-heading">
-          급여 계산 기준 알아보기
-        </h2>
-        <p className="text-sm leading-relaxed text-muted">
-          이 사이트의 4대보험료율은 국민연금공단·국민건강보험공단·고용노동부 고시를, 소득세 계산은
-          소득세법상 근로소득공제·인적공제·세율표를 기준으로 합니다. 국세청이 원천징수에 사용하는
-          간이세액표와는 산정 방식이 달라 매월 실제 원천징수액과 차이가 날 수 있습니다. 각 계산기
-          페이지 하단에서 자세한 계산 방법과 출처를 확인할 수 있습니다.
-        </p>
+      <section className="mb-10 space-y-6" aria-labelledby="about-heading">
+        <div>
+          <h2 id="about-heading" className="mb-2 text-lg font-bold text-heading">
+            이 사이트를 쓰는 법
+          </h2>
+          <p className="text-sm leading-relaxed text-muted">
+            계산기마다 필요한 값(월급, 시급, 근무시간, 입사일 등)을 입력하면 결과가 바로
+            갱신됩니다. 결과 화면에는 공제 항목이나 수당 내역이 함께 표시되며, 페이지 아래쪽에서
+            계산 방법과 예시, 근거가 되는 공식 자료를 확인할 수 있습니다. 실수령액을 알고 싶은데
+            연봉만 안다면 연봉 계산기, 월급만 안다면 월급 계산기를 사용하세요.
+          </p>
+        </div>
+        <div>
+          <h2 className="mb-2 text-lg font-bold text-heading">2026년 기준을 쓰는 이유</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            4대보험료율과 세법, 최저임금은 해마다 바뀝니다. 이 사이트는 2026년 1월부터 적용되는
+            최저임금(시급 10,320원), 국민연금 보험료율 인상(9.5%) 등 최신 기준을 반영합니다.
+            4대보험료율은 국민연금공단·국민건강보험공단·고용노동부 고시를, 소득세는 소득세법상
+            근로소득공제·인적공제·세율표를 따릅니다.
+          </p>
+        </div>
+        <div>
+          <h2 className="mb-2 text-lg font-bold text-heading">계산 결과의 한계</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            결과는 입력 조건에 따른 예상값입니다. 회사마다 수당 구성과 비과세 처리, 공제 항목이
+            다르고, 국세청 간이세액표와 이 사이트의 소득세 산정 방식에도 차이가 있어 실제
+            급여명세서·고지서와 다를 수 있습니다. 법률·세무·노무 상담을 대신하지 않습니다.
+          </p>
+        </div>
       </section>
 
       <Faq items={homeFaq} />

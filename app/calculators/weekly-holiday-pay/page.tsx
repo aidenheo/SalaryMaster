@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SourceList from "@/components/SourceList";
 import WeeklyHolidayPayCalculator from "@/components/calculators/WeeklyHolidayPayCalculator";
 
 const siteUrl = "https://salary-cal.com";
@@ -48,19 +49,71 @@ export default function WeeklyHolidayPayPage() {
 
       <article className="mt-10 space-y-8">
         <section>
-          <h2 className="mb-2 text-xl font-bold text-heading">누가 받을 수 있는가?</h2>
+          <h2 className="mb-2 text-xl font-bold text-heading">주휴수당을 받을 수 있는 조건</h2>
           <p className="text-sm leading-relaxed text-muted">
-            1주 소정근로시간이 15시간 이상이고 그 주의 소정근로일을 개근한 근로자입니다. 정규직,
-            계약직, 아르바이트 등 고용 형태와 무관하게 적용됩니다.
+            세 가지 조건을 모두 만족해야 합니다. ① 1주 소정근로시간이 15시간 이상, ② 근로계약서에
+            정한 그 주의 소정근로일을 모두 개근, ③ 다음 주에도 근로가 예정되어 있을 것. 정규직,
+            계약직, 아르바이트 등 고용 형태는 상관없습니다. 실제 일한 시간이 아니라 일하기로
+            <span className="whitespace-nowrap"> 정한</span> 시간(소정근로시간)으로 15시간 여부를
+            판단합니다.
           </p>
         </section>
+
         <section>
-          <h2 className="mb-2 text-xl font-bold text-heading">어떻게 계산하는가?</h2>
+          <h2 className="mb-2 text-xl font-bold text-heading">입력값 설명</h2>
+          <ul className="list-inside list-disc space-y-1 text-sm leading-relaxed text-muted">
+            <li>
+              <strong className="text-foreground">시급</strong> — 주휴수당 산정 기준이 되는
+              시간당 임금.
+            </li>
+            <li>
+              <strong className="text-foreground">주 근무일수·1일 근무시간</strong> — 근로계약에서
+              정한 소정근로일수와 하루 근로시간. 두 값을 곱해 주 소정근로시간을 구합니다.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 방법</h2>
           <p className="text-sm leading-relaxed text-muted">
-            주휴시간은 (주 근무시간 ÷ 40시간) × 8시간으로 계산하며 최대 8시간을 넘지 않습니다.
-            주휴수당은 주휴시간에 시급을 곱한 금액입니다.
+            주휴시간 = 8시간 × (주 소정근로시간 ÷ 40)이며 최대 8시간을 넘지 않습니다. 주휴수당은
+            주휴시간에 시급을 곱한 금액입니다. 예를 들어 주 40시간 근무자는 8시간분(시급 × 8),
+            주 20시간 근무자는 4시간분이 주휴수당입니다.
           </p>
         </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 예시</h2>
+          <div className="space-y-2 text-sm leading-relaxed text-muted">
+            <p>
+              시급 12,000원, 주 5일·1일 6시간(주 30시간) 근무 → 주휴시간 6시간 → 주휴수당
+              72,000원.
+            </p>
+            <p>
+              시급 12,000원, 주 2일·1일 6시간(주 12시간) 근무 → 15시간 미만이라 주휴수당은
+              발생하지 않습니다.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">결과가 실제와 다를 수 있는 이유</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            지각·조퇴는 결근이 아니므로 개근으로 인정되지만, 무단결근이 있으면 그 주의 주휴수당은
+            발생하지 않습니다. 주마다 근무시간이 다른 경우, 4주를 평균해 15시간 이상인지
+            판단합니다. 5인 미만 사업장도 주휴수당은 적용됩니다.
+          </p>
+        </section>
+
+        <SourceList
+          items={[
+            {
+              label: "국가법령정보센터 — 근로기준법 제55조, 시행령 제30조",
+              href: "https://www.law.go.kr/",
+            },
+            { label: "고용노동부 — 주휴수당 관련 안내", href: "https://www.moel.go.kr/" },
+          ]}
+        />
       </article>
 
       <div className="mt-10 space-y-10">

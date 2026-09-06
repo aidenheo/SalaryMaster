@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SourceList from "@/components/SourceList";
 import SeveranceCalculator from "@/components/calculators/SeveranceCalculator";
 
 const siteUrl = "https://salary-cal.com";
@@ -55,13 +56,53 @@ export default function SeverancePage() {
           </p>
         </section>
         <section>
-          <h2 className="mb-2 text-xl font-bold text-heading">실제 지급액과 차이가 나는 이유</h2>
+          <h2 className="mb-2 text-xl font-bold text-heading">입력값 설명</h2>
+          <ul className="list-inside list-disc space-y-1 text-sm leading-relaxed text-muted">
+            <li>
+              <strong className="text-foreground">입사일·퇴사일</strong> — 근로관계가 유지된
+              전체 기간(계속근로기간)을 계산합니다. 퇴사일은 마지막 근무일의 다음 날입니다.
+            </li>
+            <li>
+              <strong className="text-foreground">퇴직 전 3개월 총 급여</strong> — 퇴직일 이전
+              3개월간 실제 지급된 세전 임금 총액(기본급 + 각종 수당).
+            </li>
+            <li>
+              <strong className="text-foreground">연간 상여금·연차수당</strong> — 퇴직 전
+              1년간 받은 금액. 이 중 3/12(3개월분)이 평균임금에 더해집니다.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 예시</h2>
           <p className="text-sm leading-relaxed text-muted">
-            평균임금이 통상임금보다 낮게 계산되는 경우 통상임금을 기준으로 지급해야 하는데, 이
-            계산기는 이 비교 과정을 반영하지 않습니다. 정확한 금액은 회사의 급여대장을 기준으로
-            확인하는 것이 좋습니다.
+            2023년 1월 1일 입사, 2026년 1월 1일 퇴사(계속근로 약 3년), 퇴직 전 3개월 급여
+            합계가 9,000,000원이라면 1일 평균임금은 약 97,800원이고 예상 퇴직금은 약
+            880만원입니다. 상여금이나 미사용 연차수당이 있으면 평균임금이 올라가 퇴직금도
+            늘어납니다.
           </p>
         </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">실제 지급액과 차이가 나는 이유</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            평균임금이 통상임금보다 낮으면 통상임금을 기준으로 지급해야 하는데, 이 계산기는 그
+            비교 과정을 반영하지 않습니다. 또 3개월 안에 무급휴직·결근이 있으면 그 기간과 임금을
+            빼고 계산해야 하며, 상여금·연차수당의 산입 방식도 회사 규정에 따라 다를 수 있습니다.
+            퇴직연금(DC형)에 가입한 경우 계산 방식이 완전히 다릅니다.
+          </p>
+        </section>
+
+        <SourceList
+          items={[
+            {
+              label: "국가법령정보센터 — 근로자퇴직급여 보장법 제4조·제8조, 근로기준법 제2조",
+              href: "https://www.law.go.kr/",
+            },
+            { label: "고용노동부 — 퇴직금 제도 안내 및 계산기", href: "https://www.moel.go.kr/" },
+            { label: "금융감독원 통합연금포털 — 퇴직연금", href: "https://100lifeplan.fss.or.kr/" },
+          ]}
+        />
       </article>
 
       <div className="mt-10 space-y-10">

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SourceList from "@/components/SourceList";
 import SalaryCalculator from "@/components/calculators/SalaryCalculator";
 
 const siteUrl = "https://salary-cal.com";
@@ -102,13 +103,44 @@ export default function SalaryPage() {
         </section>
 
         <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 예시</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            월급 3,500,000원, 비과세 급여 200,000원(식대), 부양가족 본인 1명 조건이라면 국민연금
+            약 15만원대, 건강보험·장기요양보험 약 13만원대, 고용보험 약 3만원, 소득세·지방소득세
+            약 12~15만원이 공제되어 실수령액은 약 300만원 내외로 계산됩니다. 부양가족을 늘리거나
+            비과세 항목을 추가하면 공제액이 줄어 실수령액이 올라갑니다.
+          </p>
+        </section>
+
+        <section>
           <h2 className="mb-2 text-xl font-bold text-heading">계산 결과가 급여명세서와 다른 이유</h2>
           <p className="text-sm leading-relaxed text-muted">
             국세청의 근로소득 간이세액표는 급여 구간별로 미리 계산된 표를 사용하지만, 이 계산기는
             소득세법상 산정 구조를 직접 적용한 추정값을 보여줍니다. 두 방식의 세부 산식 차이로
-            매월 원천징수세액과 다소 차이가 날 수 있습니다.
+            매월 원천징수세액과 다소 차이가 날 수 있으며, 연말정산에서 정산됩니다. 이 밖에
+            상여금 지급월, 중도 입·퇴사, 노동조합비·사우회비 등 회사별 공제 항목도 실제
+            명세서와 차이를 만듭니다.
           </p>
         </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">2026년 기준</h2>
+          <ul className="list-inside list-disc space-y-1 text-sm leading-relaxed text-muted">
+            <li>국민연금: 근로자 부담 4.75% (2026년 보험료율 9.5%의 절반, 기준소득월액 41만~659만원)</li>
+            <li>건강보험: 근로자 부담 3.595% / 장기요양보험: 건강보험료의 13.14%</li>
+            <li>고용보험(실업급여): 근로자 부담 0.9%</li>
+            <li>소득세: 소득세법상 근로소득공제·인적공제(1인 150만원)·기본세율표 적용</li>
+          </ul>
+        </section>
+
+        <SourceList
+          items={[
+            { label: "국민연금공단 — 연금보험료 및 기준소득월액", href: "https://www.nps.or.kr/" },
+            { label: "국민건강보험공단 — 4대 사회보험료 모의계산", href: "https://www.nhis.or.kr/" },
+            { label: "국세청 홈택스 — 근로소득 간이세액표", href: "https://www.hometax.go.kr/" },
+            { label: "국가법령정보센터 — 소득세법 제47조·제50조·제55조", href: "https://www.law.go.kr/" },
+          ]}
+        />
       </article>
 
       <div className="mt-10 space-y-10">

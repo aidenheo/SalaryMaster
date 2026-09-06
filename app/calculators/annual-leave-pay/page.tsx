@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
+import SourceList from "@/components/SourceList";
 import AnnualLeavePayCalculator from "@/components/calculators/AnnualLeavePayCalculator";
 
 const siteUrl = "https://salary-cal.com";
@@ -57,10 +58,59 @@ export default function AnnualLeavePayPage() {
         <section>
           <h2 className="mb-2 text-xl font-bold text-heading">통상임금이란?</h2>
           <p className="text-sm leading-relaxed text-muted">
-            정기적·일률적으로 지급되는 기본급과 각종 고정수당을 말합니다. 연차수당, 연장근로수당 등
-            각종 법정수당 계산의 기준이 됩니다.
+            정기적·일률적으로 지급하기로 정해진 기본급과 고정수당을 말합니다. 연차수당,
+            연장근로수당 등 각종 법정수당 계산의 기준이 됩니다. 1일 통상임금은 월 통상임금을 월
+            소정근로시간으로 나눈 뒤 1일 소정근로시간(보통 8시간)을 곱해 구합니다.
           </p>
         </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">입력값 설명</h2>
+          <ul className="list-inside list-disc space-y-1 text-sm leading-relaxed text-muted">
+            <li>
+              <strong className="text-foreground">입사일·기준일</strong> — 기준일까지의
+              근속기간으로 발생 연차일수를 계산합니다. 보통 연차 정산 시점이나 퇴사일을
+              기준일로 둡니다.
+            </li>
+            <li>
+              <strong className="text-foreground">이미 사용한 연차일수</strong> — 발생 연차에서
+              빼서 잔여 연차를 구합니다.
+            </li>
+            <li>
+              <strong className="text-foreground">월 통상임금·월 소정근로시간</strong> — 1일
+              통상임금 계산에 쓰입니다. 주 40시간 근무라면 소정근로시간은 보통 209시간입니다.
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">계산 예시</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            근속 1년(발생 연차 15일) 중 5일을 사용해 잔여 연차가 10일이고, 월 통상임금
+            2,700,000원, 월 소정근로시간 209시간이라면 1일 통상임금은 약 103,300원, 예상
+            연차수당은 약 103만원입니다.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="mb-2 text-xl font-bold text-heading">연차 사용촉진과 결과 차이</h2>
+          <p className="text-sm leading-relaxed text-muted">
+            회사가 근로기준법 제61조에 따라 적법하게 연차 사용을 촉진했는데도 근로자가
+            사용하지 않았다면 미사용 연차수당 지급 의무가 없을 수 있습니다. 또 회계연도 기준으로
+            연차를 부여하는 회사가 많아 입사일 기준 계산과 실제 부여일수가 다를 수 있습니다.
+            정확한 일수는 회사 취업규칙을 확인하세요.
+          </p>
+        </section>
+
+        <SourceList
+          items={[
+            {
+              label: "국가법령정보센터 — 근로기준법 제60조·제61조",
+              href: "https://www.law.go.kr/",
+            },
+            { label: "고용노동부 — 연차유급휴가 안내", href: "https://www.moel.go.kr/" },
+          ]}
+        />
       </article>
 
       <div className="mt-10 space-y-10">
