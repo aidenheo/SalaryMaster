@@ -21,6 +21,9 @@ export const metadata: Metadata = {
   description:
     "월급·연봉 실수령액, 주휴수당, 퇴직금, 연차수당, 시급, 최저임금, 연장·야간·휴일수당까지 2026년 기준으로 계산합니다.",
   alternates: { canonical: "/" },
+  verification: {
+    other: { "naver-site-verification": "f98de59d268f912bcbc862dad86cf1338f7eb655" },
+  },
   openGraph: {
     type: "website",
     locale: "ko_KR",
