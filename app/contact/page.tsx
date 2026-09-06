@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Breadcrumb from "@/components/Breadcrumb";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   title: "문의",

@@ -4,7 +4,7 @@ import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import HourlyWageCalculator from "@/components/calculators/HourlyWageCalculator";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   title: "시급 계산기",

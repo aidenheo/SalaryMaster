@@ -98,7 +98,7 @@ tests/                        계산기별 vitest 단위 테스트 (정상값 + 
 
 Vercel 등 Next.js를 지원하는 어떤 플랫폼에도 배포할 수 있습니다. 서버 상태나 DB가 없으므로 별도
 백엔드 인프라가 필요 없습니다. 배포 전 `app/layout.tsx`, `app/sitemap.ts`, `app/robots.ts`,
-각 페이지의 `canonical`에 하드코딩된 `siteUrl`(`https://salary-master.example.com`)을 실제
+각 페이지의 `canonical`에 하드코딩된 `siteUrl`(`https://salary-cal.com`)을 실제
 도메인으로 교체하세요.
 
 ## 환경변수

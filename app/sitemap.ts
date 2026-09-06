@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { calculators } from "@/lib/calculatorList";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = ["/", "/about", "/privacy", "/terms", "/contact"].map((path) => ({

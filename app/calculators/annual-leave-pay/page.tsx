@@ -4,7 +4,7 @@ import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import AnnualLeavePayCalculator from "@/components/calculators/AnnualLeavePayCalculator";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   title: "연차수당 계산기",

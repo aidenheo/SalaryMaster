@@ -4,7 +4,7 @@ import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import OvertimeCalculator from "@/components/calculators/OvertimeCalculator";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   title: "연장·야간·휴일수당 계산기",

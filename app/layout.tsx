@@ -10,7 +10,7 @@ const notoSansKr = Noto_Sans_KR({
   weight: ["400", "500", "700"],
 });
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

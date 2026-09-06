@@ -4,7 +4,7 @@ import Faq from "@/components/Faq";
 import RelatedCalculators from "@/components/RelatedCalculators";
 import SeveranceCalculator from "@/components/calculators/SeveranceCalculator";
 
-const siteUrl = "https://salary-master.example.com";
+const siteUrl = "https://salary-cal.com";
 
 export const metadata: Metadata = {
   title: "퇴직금 계산기",
